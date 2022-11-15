@@ -9,6 +9,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Ball.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/GameController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -67,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1668462336443</updated>
       <workItem from="1668462344814" duration="600000" />
-      <workItem from="1668468399660" duration="5856000" />
+      <workItem from="1668468399660" duration="6314000" />
     </task>
     <servers />
   </component>
