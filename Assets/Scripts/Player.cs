@@ -1,41 +1,68 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     //Public Declared Values
-    [SerializeField] public float horizontalSpeed = 5;
-    [SerializeField] public float verticalSpeed = 7;
-    
-    //Private Declared Values
-    private Vector3 _startingPosition;
-
-    //Cached Values
+    public Vector3 _basePosition;
+    private CharacterAbility[] _abilities;
     private Rigidbody _rigidbody;
-    
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        InitializeAbilities();
+    }
+
+    private void InitializeAbilities()
+    {
+        _abilities = GetComponents<CharacterAbility>();
+        foreach (var ability in _abilities)
+        {
+            ability._player = this;
+            ability._rigidbody = _rigidbody;
+        }
+    }
+
+    private Vector3 AbilityDisplacement()
+    {
+        var totalVector = Vector3.zero;
+        foreach (var ability in _abilities)
+        {
+            if (!ability.blockedGameStates.Contains(GameManager.Instance.GetGameState()))
+            {
+                 totalVector += ability.PhysicUpdate();
+            }
+        }
+
+        return totalVector;
+    }
+
+    private void AbilityUpdates()
+    {
+        foreach (var ability in _abilities)
+        {
+            if (!ability.blockedGameStates.Contains(GameManager.Instance.GetGameState()))
+            {
+                ability.NormalUpdate();
+            }
+        }
+    }
+
     void Start()
     {
-        _startingPosition = transform.position;
-        _rigidbody = GetComponent<Rigidbody>();
+        _basePosition = transform.position;
     }
-
     
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        Move();
+        _rigidbody.MovePosition(_rigidbody.position + AbilityDisplacement());
     }
 
-    void Move()
+    private void Update()
     {
-        var horizontalVector = Input.GetAxisRaw("Horizontal");
-        var totalVector = new Vector3(horizontalVector*horizontalSpeed, 0, verticalSpeed);
-        _rigidbody.MovePosition(_rigidbody.position + (totalVector * (Time.fixedDeltaTime)));
-        if (Mathf.Abs(_rigidbody.position.z - _startingPosition.z) >= 30 && verticalSpeed!= 0)
-        {
-            _rigidbody.position = new Vector3(_rigidbody.position.x, _rigidbody.position.y, _startingPosition.z+30);
-            verticalSpeed = 0;
-        }
+        AbilityUpdates();
     }
 }
