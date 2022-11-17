@@ -9,7 +9,7 @@ public class PlayerRunner : CharacterAbility
 
     public override Vector3 PhysicUpdate()
     {
-        if (GameManager.Instance.GetGameState() == GameManager.GameState.running)
+        if (GameManager.Instance.GetGameState() == GameManager.GameState.Running)
         {
             return Move();
         }
@@ -22,12 +22,6 @@ public class PlayerRunner : CharacterAbility
     Vector3 Move()
     {
         var displacement = (Vector3.forward * (speed*Time.fixedDeltaTime));
-        if (Mathf.Abs(displacement.z - _player._basePosition.z + _rigidbody.position.z) >= 30)
-        {
-            var overShoot = Mathf.Abs(displacement.z - _player._basePosition.z + _rigidbody.position.z)-30;
-            displacement -= Vector3.forward*overShoot;
-            GameManager.Instance.SetGameState(GameManager.GameState.control);
-        }
         return displacement;
     }
 }

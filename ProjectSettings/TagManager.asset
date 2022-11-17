@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ControlPoint
+  - PoolCenter
+  - EndPoint
+  - Node1
+  - Node2
+  - Node3
+  - PoolText
+  - Object
   layers:
   - Default
   - TransparentFX

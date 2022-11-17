@@ -11,8 +11,11 @@ public abstract class CharacterAbility : MonoBehaviour
     public GameManager.GameState[] blockedPlayerStates;
 
 
-    public abstract Vector3 PhysicUpdate();
-    
+    public virtual Vector3 PhysicUpdate()
+    {
+        return Vector3.zero;
+    }
+
     public virtual void NormalUpdate()
     {
         

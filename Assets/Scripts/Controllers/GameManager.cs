@@ -4,52 +4,92 @@ using UnityEngine;
 using System;
 public class GameManager : MonoBehaviour
 {
+    //SINGLETON
     public static GameManager Instance;
-    public int currentLevel;
 
-    public static event Action OnMenuState;
-    public static event Action OnRunningState;
-    public static event Action OnControlState;
+    //EVENTS
+    public static event Action StartEnter;
+    public static event Action StartExit;
+    public static event Action RunningEnter;
+    public static event Action RunningExit;
+    public static event Action ControlEnter;
+    public static event Action ControlExit;
+    public static event Action RestEnter;
+    public static event Action RestExit;
+    public static event Action Win;
+    public static event Action Lose;
+    public static event Action Connecting;
     
     private GameState _gameState;
-    private List<Level> _levels;
-    public class Level
-    {
-        public int id;
-        public int pool1;
-        public int pool2;
-        public int pool3;
-        public GameObject levelObject;
+    public List<Level> levels;
+    public Level curLevel;
+    public LevelNode curNode;
+    public int savedLevelID = 1;
 
-        public Level(int _id, int _pool1, int _pool2, int _pool3, GameObject _levelObject)
-        {
-            id = _id;
-            pool1 = _pool1;
-            pool2 = _pool2;
-            pool3 = _pool3;
-            levelObject = _levelObject;
-        }
-    }
+    private Player _player;
     public enum GameState
     {
-        menu,
-        running,
-        control
+        Start,
+        Running,
+        Control,
+        Rest,
+        Lose,
+        Win,
+        Connecting
     }
 
     public void SetGameState(GameState state)
     {
-        if (state == GameState.menu)
+        if (_gameState == state)
         {
-            OnMenuState?.Invoke();
+            print("Error: Trying to setting Game State with the same state");
+            return;
         }
-        else if (state == GameState.running)
+        
+        switch (_gameState)
         {
-            OnRunningState?.Invoke();
+            case GameState.Start:
+                StartExit?.Invoke();
+                break;
+            case GameState.Running:
+                RunningExit?.Invoke();
+                break;
+            case GameState.Control:
+                ControlExit?.Invoke();
+                break;
+            case GameState.Rest:
+                RestExit?.Invoke();
+                break;
+            default:
+                print("Error in SetGameState switch1");
+                break;
         }
-        else if (state == GameState.control)
+        switch (state)
         {
-            OnControlState?.Invoke();
+            case GameState.Start:
+                StartEnter?.Invoke();
+                break;
+            case GameState.Running:
+                RunningEnter?.Invoke();
+                break;
+            case GameState.Control:
+                ControlEnter?.Invoke();
+                break;
+            case GameState.Rest:
+                RestEnter?.Invoke();
+                break;
+            case GameState.Lose:
+                Lose?.Invoke();
+                break;
+            case GameState.Win:
+                Win?.Invoke();
+                break;
+            case GameState.Connecting:
+                Connecting?.Invoke();
+                break;
+            default:
+                print("Error in SetGameState switch2");
+                break;
         }
         _gameState = state;
     }
@@ -68,12 +108,59 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        SetGameState(GameState.running);
+        _player = FindObjectOfType<Player>();
+        if (savedLevelID > 0)
+        {
+            curLevel = levels[savedLevelID - 1];
+            curNode = curLevel.nodes[0];
+            curNode.EnableNode();
+        }
+        else
+        {
+            curLevel = levels[0];
+            curNode = curLevel.nodes[0];
+            curNode.EnableNode();
+        }
+        SetGameState(GameState.Start);
     }
 
-    
+    void ControlPoint()
+    {
+        if (_player.transform.position.z >= curNode.controlPoint.position.z && GetGameState() == GameState.Running)
+        {
+            Vector3 snapToEndPoint = _player.transform.position;
+            snapToEndPoint.z = curNode.controlPoint.position.z;
+            _player.transform.position = snapToEndPoint;
+            SetGameState(GameState.Control);
+        }
+    }
+
+    public void GoNextNode()
+    {
+        if (curNode.ID != 4)
+        {
+            curNode.DisableNode();
+            curNode = curLevel.nodes[curNode.ID];
+            curNode.EnableNode();
+            SetGameState(GameState.Running);
+        }
+        else
+        {
+            curLevel = levels[curLevel.ID];  //GoingToUpgradeThis
+            curNode.DisableNode();
+            curNode = curLevel.nodes[0];
+            curNode.EnableNode();
+            SetGameState(GameState.Win);
+        }
+        
+    }
+
+    public void LoseLevel()
+    {
+        SetGameState(GameState.Lose);
+    }
     void Update()
     {
-        
+        ControlPoint();
     }
 }
