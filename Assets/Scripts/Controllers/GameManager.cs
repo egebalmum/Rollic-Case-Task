@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     public static event Action ControlExit;
     public static event Action RestEnter;
     public static event Action RestExit;
-    public static event Action Win;
-    public static event Action Lose;
+    public static event Action WinEnter;
+    public static event Action WinExit;
+    public static event Action LoseEnter;
+    public static event Action LoseExit;
     public static event Action Connecting;
     
     private GameState _gameState;
@@ -60,6 +62,12 @@ public class GameManager : MonoBehaviour
             case GameState.Rest:
                 RestExit?.Invoke();
                 break;
+            case GameState.Lose:
+                LoseExit?.Invoke();
+                break;
+            case GameState.Win:
+                WinExit?.Invoke();
+                break;
             default:
                 print("Error in SetGameState switch1");
                 break;
@@ -79,10 +87,10 @@ public class GameManager : MonoBehaviour
                 RestEnter?.Invoke();
                 break;
             case GameState.Lose:
-                Lose?.Invoke();
+                LoseEnter?.Invoke();
                 break;
             case GameState.Win:
-                Win?.Invoke();
+                WinEnter?.Invoke();
                 break;
             case GameState.Connecting:
                 Connecting?.Invoke();

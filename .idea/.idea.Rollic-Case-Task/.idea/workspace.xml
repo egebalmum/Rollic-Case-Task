@@ -9,6 +9,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Ball.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/InterfaceManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelNode.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -72,7 +73,7 @@
       <workItem from="1668468399660" duration="7012000" />
       <workItem from="1668537689027" duration="3282000" />
       <workItem from="1668551621162" duration="8504000" />
-      <workItem from="1668703810664" duration="16421000" />
+      <workItem from="1668703810664" duration="19480000" />
     </task>
     <servers />
   </component>
