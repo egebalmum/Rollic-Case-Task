@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
+
 public class GameManager : MonoBehaviour
 {
     //SINGLETON
@@ -21,9 +23,12 @@ public class GameManager : MonoBehaviour
     public static event Action LoseEnter;
     public static event Action LoseExit;
     public static event Action Connecting;
-    
+    [SerializeField] private GameObject[] collectableTypes;
     public GameState _gameState;
+    public GameObject levelTemp;
+    public List<GameObject> levelObjects;
     public List<Level> levels;
+    public List<LevelManager.LevelData> levelDatas;
     public Level curLevel;
     public LevelNode curNode;
     public int savedLevelID = 1;
@@ -101,7 +106,7 @@ public class GameManager : MonoBehaviour
         }
         _gameState = state;
     }
-
+    
     public GameState GetGameState()
     {
         return _gameState;
@@ -117,6 +122,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _player = FindObjectOfType<Player>();
+        levelObjects = new List<GameObject>();
+        levelDatas = new List<LevelManager.LevelData>();
+        LoadLevels();
         if (savedLevelID > 0)
         {
             curLevel = levels[savedLevelID - 1];
@@ -129,7 +137,11 @@ public class GameManager : MonoBehaviour
             curNode = curLevel.nodes[0];
             curNode.EnableNode();
         }
+
+        
+        
         SetGameState(GameState.Start);
+        
     }
 
     void ControlPoint()
@@ -145,7 +157,7 @@ public class GameManager : MonoBehaviour
 
     public void GoNextNode()
     {
-        if (curNode.ID != 4)
+        if (curNode.ID != 3)
         {
             curNode.DisableNode();
             curNode = curLevel.nodes[curNode.ID];
@@ -160,16 +172,64 @@ public class GameManager : MonoBehaviour
             curNode.EnableNode();
             SetGameState(GameState.Win);
         }
-        
     }
 
     public void LoseLevel()
     {
         SetGameState(GameState.Lose);
     }
-
+    
+    
+    public void LoadLevels()
+    {
+        DirectoryInfo dir = new DirectoryInfo(Application.dataPath+"/Levels/");
+        int levelCount = (dir.GetDirectories().Length);
+        for (int i = 1; i <= levelCount; i++)
+        {
+            string json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node1.json");
+            LevelManager.NodeData nodeData1 = JsonUtility.FromJson<LevelManager.NodeData>(json);
+            
+            json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node2.json");
+            LevelManager.NodeData nodeData2 = JsonUtility.FromJson<LevelManager.NodeData>(json);
+            
+            json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node3.json");
+            LevelManager.NodeData nodeData3 = JsonUtility.FromJson<LevelManager.NodeData>(json);
+            
+            var levelobj = Instantiate(levelTemp, transform.position + Vector3.forward * 135 * (i - 1), Quaternion.identity);
+            
+            levelObjects.Add(levelobj);
+            var levelScript = levelobj.GetComponent<Level>();
+            levelScript.ID = i;
+            levels.Add(levelScript);
+            
+            var levelData = new LevelManager.LevelData();
+            levelData.nodeList.Add(nodeData1);
+            levelData.nodeList.Add(nodeData2);
+            levelData.nodeList.Add(nodeData3);
+            levelDatas.Add(levelData);
+            for (int j = 0; j < 3; j++)
+            {
+                levelScript.nodes[j].poolThreshold = levelDatas[i-1].nodeList[j].threshold;
+                int objCount = levelDatas[i-1].nodeList[j].positions.Count;
+                for (int k = 0; k < objCount; k++)
+                {
+                    var collectable = Instantiate(collectableTypes[levelDatas[i-1].nodeList[j].objectTypes[k]],
+                        levelDatas[i-1].nodeList[j].positions[k] + Vector3.forward*(135*(i-1)), Quaternion.identity);
+                    collectable.transform.localScale = levelDatas[i - 1].nodeList[j].scales[k];
+                }
+                levelScript.nodes[j].UpdateScore();
+            }
+        }
+    }
+    
     public void RestartLevel()
     {
+        //RESTART
+    }
+
+    public void GoNextLevel()
+    {
+        SetGameState(GameState.Connecting);
         
     }
     void Update()

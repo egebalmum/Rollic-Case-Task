@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor;
 
 public class LevelNode : MonoBehaviour
 {
@@ -37,8 +36,6 @@ public class LevelNode : MonoBehaviour
                     break;
             }
         }
-
-        text.text = "0 / " + poolThreshold;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,5 +73,10 @@ public class LevelNode : MonoBehaviour
     public void DisableNode()
     {
         GameManager.ControlEnter -= ControlPoolTimed;
+    }
+
+    public void UpdateScore()
+    {
+        text.text = objectInPoolCount+" / " + poolThreshold;
     }
 }

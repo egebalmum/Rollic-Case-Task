@@ -880,7 +880,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 19.2
   m_fontSizeBase: 2
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1679,10 +1679,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   types:
-  - {fileID: 5589245352327123366, guid: e3440e53d4b43e54197a56c851cb6e1a, type: 3}
-  - {fileID: 334020558753453762, guid: 19b5ddf9c00fea540b0a142d94cb6fb0, type: 3}
-  - {fileID: 6752108818991438064, guid: 7ecc5d8af494bcd478db5860aca86e72, type: 3}
-  - {fileID: 5806273193677723484, guid: 9767e5d1bd6c85c438a2ea60d636a9cd, type: 3}
+  - {fileID: 3640619043913571739, guid: 3cb6d40ebdf24394790b192267abb300, type: 3}
+  - {fileID: 8107039158861367189, guid: d318f80036bdef54691d8d227c2f18c4, type: 3}
+  - {fileID: 1150859954885441686, guid: c9553c2649d712c4eb277e4cc6488b6b, type: 3}
+  - {fileID: 7625774790556596474, guid: 92702e28c8d1fa84a869df4fa785f85f, type: 3}
   holdingObject: {fileID: 0}
   thresholds: 
   activeNode: 1

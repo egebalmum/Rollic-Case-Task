@@ -82,7 +82,8 @@ public class LevelManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 var placedObject = Instantiate(holdingObject, holdingObject.transform.position, Quaternion.identity);
-                level.nodeList[activeNode-1].transforms.Add(placedObject.transform);
+                level.nodeList[activeNode-1].positions.Add(placedObject.transform.position);
+                level.nodeList[activeNode-1].scales.Add(placedObject.transform.localScale);
                 level.nodeList[activeNode-1].objectTypes.Add(activeID);
             }
             
@@ -123,24 +124,37 @@ public class LevelManager : MonoBehaviour
 
     public class NodeData
     {
-        public List<Transform> transforms;
+        public List<Vector3> positions;
+        public List<Vector3> scales;
         public List<int> objectTypes;
         public int threshold;
         public NodeData()
         {
-            transforms = new List<Transform>();
+            positions = new List<Vector3>();
+            scales = new List<Vector3>();
             objectTypes = new List<int>();
         }
     }
 
     public void SaveLevel()
     {
+        int levelNumber;
+        DirectoryInfo dir = new DirectoryInfo(Application.dataPath+"/Levels/");
+        if (dir.GetDirectories().Length == 0)
+        {
+            levelNumber = 1;
+        }
+        else
+        {
+            levelNumber = dir.GetDirectories().Length + 1;
+        }
+        Directory.CreateDirectory(Application.dataPath + "/Levels/Level"+levelNumber);
         for (int i = 0; i < 3; i++)
         {
             string json = JsonUtility.ToJson(level.nodeList[i], true);
-            File.WriteAllText(Application.dataPath + "/Levels/Level1/node"+(i+1) +".json" , json);
+            File.WriteAllText(Application.dataPath + "/Levels/Level"+ levelNumber + "/node"+(i+1) +".json" , json);
         }
-        
+        Debug.Log("done");
         
     }
 }
