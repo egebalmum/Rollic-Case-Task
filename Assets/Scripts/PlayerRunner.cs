@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRunner : CharacterAbility
+public class PlayerRunner : PlayerAbility
 {
     [SerializeField] public float speed = 7;
 
@@ -18,7 +18,7 @@ public class PlayerRunner : CharacterAbility
             return Vector3.zero;
         }
     }
-
+    
     Vector3 Move()
     {
         var displacement = (Vector3.forward * (speed*Time.fixedDeltaTime));

@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public static event Action LoseExit;
     public static event Action Connecting;
     
-    private GameState _gameState;
+    public GameState _gameState;
     public List<Level> levels;
     public Level curLevel;
     public LevelNode curNode;
@@ -166,6 +166,11 @@ public class GameManager : MonoBehaviour
     public void LoseLevel()
     {
         SetGameState(GameState.Lose);
+    }
+
+    public void RestartLevel()
+    {
+        
     }
     void Update()
     {

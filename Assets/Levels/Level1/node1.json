@@ -1,0 +1,47 @@
+{
+    "transforms": [
+        {
+            "instanceID": -12854
+        },
+        {
+            "instanceID": -12864
+        },
+        {
+            "instanceID": -12874
+        },
+        {
+            "instanceID": -12884
+        },
+        {
+            "instanceID": -12894
+        },
+        {
+            "instanceID": -12904
+        },
+        {
+            "instanceID": -12914
+        },
+        {
+            "instanceID": -12924
+        },
+        {
+            "instanceID": -12934
+        },
+        {
+            "instanceID": -12944
+        }
+    ],
+    "objectTypes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "threshold": 6
+}

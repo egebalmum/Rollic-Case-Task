@@ -8,8 +8,10 @@ public class Player : MonoBehaviour
 {
     //Public Declared Values
     public Vector3 _basePosition;
-    private CharacterAbility[] _abilities;
+    private PlayerAbility[] _abilities;
     private Rigidbody _rigidbody;
+    public float leftBound;
+    public float rightBound;
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -18,7 +20,7 @@ public class Player : MonoBehaviour
 
     private void InitializeAbilities()
     {
-        _abilities = GetComponents<CharacterAbility>();
+        _abilities = GetComponents<PlayerAbility>();
         foreach (var ability in _abilities)
         {
             ability._player = this;

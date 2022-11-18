@@ -2401,6 +2401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e708e925f4d6c86458b303405bbed978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameState: 0
   levels:
   - {fileID: 521894907}
   curLevel: {fileID: 0}
@@ -2607,6 +2608,7 @@ GameObject:
   - component: {fileID: 547858754}
   - component: {fileID: 547858753}
   - component: {fileID: 547858755}
+  - component: {fileID: 547858756}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2627,6 +2629,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _basePosition: {x: 0, y: 0, z: 0}
+  leftBound: -3.65
+  rightBound: 3.65
 --- !u!54 &547858751
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2677,7 +2681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _rigidbody: {fileID: 0}
-  blockedGameStates: 0000000002000000
+  blockedGameStates: 000000000200000003000000040000000500000006000000
   blockedPlayerStates: 
   speed: 7
 --- !u!114 &547858754
@@ -2694,7 +2698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _rigidbody: {fileID: 0}
-  blockedGameStates: 
+  blockedGameStates: 00000000040000000500000006000000
   blockedPlayerStates: 
   speed: 5
 --- !u!114 &547858755
@@ -2712,6 +2716,22 @@ MonoBehaviour:
   _player: {fileID: 0}
   _rigidbody: {fileID: 0}
   blockedGameStates: 0100000002000000
+  blockedPlayerStates: 
+--- !u!114 &547858756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547858749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a1fcce2ef83ea4ca0b0059e58cdac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  blockedGameStates: 
   blockedPlayerStates: 
 --- !u!1 &551778962
 GameObject:
@@ -5594,7 +5614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1090283452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6542,9 +6562,10 @@ MonoBehaviour:
   gameUI: {fileID: 1281613801}
   curLevel: {fileID: 711492645}
   nextLevel: {fileID: 2007368844}
-  node1: {fileID: 1802552291}
-  node2: {fileID: 899549689}
-  node3: {fileID: 1425430983}
+  nodeModels:
+  - {fileID: 1802552291}
+  - {fileID: 899549689}
+  - {fileID: 1425430983}
   winUI: {fileID: 880749949}
   winButton: {fileID: 0}
   loseUI: {fileID: 255247510}
@@ -7566,6 +7587,24 @@ Transform:
   m_Father: {fileID: 2133288623}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1698992276 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3625456276011930067, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+  m_PrefabInstance: {fileID: 1522492392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1698992277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698992276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd25b90aaa9fc94facfc04a9aecd1f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTypes: []
 --- !u!1 &1703906401
 GameObject:
   m_ObjectHideFlags: 0

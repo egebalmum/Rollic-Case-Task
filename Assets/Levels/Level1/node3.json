@@ -1,0 +1,107 @@
+{
+    "transforms": [
+        {
+            "instanceID": -13134
+        },
+        {
+            "instanceID": -13144
+        },
+        {
+            "instanceID": -13154
+        },
+        {
+            "instanceID": -13164
+        },
+        {
+            "instanceID": -13174
+        },
+        {
+            "instanceID": -13184
+        },
+        {
+            "instanceID": -13194
+        },
+        {
+            "instanceID": -13204
+        },
+        {
+            "instanceID": -13214
+        },
+        {
+            "instanceID": -13224
+        },
+        {
+            "instanceID": -13234
+        },
+        {
+            "instanceID": -13244
+        },
+        {
+            "instanceID": -13254
+        },
+        {
+            "instanceID": -13264
+        },
+        {
+            "instanceID": -13274
+        },
+        {
+            "instanceID": -13284
+        },
+        {
+            "instanceID": -13294
+        },
+        {
+            "instanceID": -13558
+        },
+        {
+            "instanceID": -13568
+        },
+        {
+            "instanceID": -13578
+        },
+        {
+            "instanceID": -13588
+        },
+        {
+            "instanceID": -13598
+        },
+        {
+            "instanceID": -13608
+        },
+        {
+            "instanceID": -13618
+        },
+        {
+            "instanceID": -13628
+        }
+    ],
+    "objectTypes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+    ],
+    "threshold": 22
+}

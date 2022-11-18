@@ -42,5 +42,13 @@ public class Level : MonoBehaviour
             }
         }
     }
+
+    public void RestartLevel()
+    {
+        foreach (var node in nodes)
+        {
+            //node.objects
+        }
+    }
     
 }

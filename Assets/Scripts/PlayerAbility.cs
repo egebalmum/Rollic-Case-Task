@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CharacterAbility : MonoBehaviour
+public abstract class PlayerAbility : MonoBehaviour
 {
     [HideInInspector] public Player _player;
     [HideInInspector] public Rigidbody _rigidbody;
