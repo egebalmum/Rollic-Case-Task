@@ -8,6 +8,7 @@ public class CollectableObject : MonoBehaviour
     private Vector3 initialPos;
     private Quaternion initialRot;
     private Rigidbody rigidbody;
+    [SerializeField] public ParticleSystem popParticle;
     void Start()
     {
         initialPos = transform.position;
@@ -21,6 +22,11 @@ public class CollectableObject : MonoBehaviour
         rigidbody.angularVelocity = Vector3.zero;
         transform.position = initialPos;
         transform.rotation = initialRot;
+    }
+
+    public void PopParticleEffect()
+    {
+        Instantiate(popParticle, transform.position, Quaternion.identity);
     }
    
 }
