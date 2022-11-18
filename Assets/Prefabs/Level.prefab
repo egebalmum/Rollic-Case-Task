@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  gameField: {fileID: 0}
   nodes:
   - {fileID: 0}
   - {fileID: 0}
@@ -71,6 +72,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Node2
       objectReference: {fileID: 0}
+    - target: {fileID: 5446882531140968231, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5446882531140968231, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: dba6d9f42d2a914459f9c0e756381642, type: 2}
     - target: {fileID: 8111269189108500431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -141,6 +150,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Node1
       objectReference: {fileID: 0}
+    - target: {fileID: 5446882531140968231, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5446882531140968231, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: dba6d9f42d2a914459f9c0e756381642, type: 2}
     - target: {fileID: 8111269189108500431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -203,6 +220,10 @@ PrefabInstance:
       propertyPath: poolThreshold
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1237296114394592744, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3625456276011930067, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_Name
       value: Node3
@@ -210,6 +231,18 @@ PrefabInstance:
     - target: {fileID: 3625456276011930067, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_TagString
       value: Node3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5446882531140968231, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5446882531140968231, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: dba6d9f42d2a914459f9c0e756381642, type: 2}
+    - target: {fileID: 7636160311195964431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8111269189108500431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_RootOrder
@@ -269,6 +302,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 253551126648238090}
     m_Modifications:
+    - target: {fileID: 2289435837577298104, guid: 85aef421a81c52c4681a16ea7bb4431e, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289435837577298104, guid: 85aef421a81c52c4681a16ea7bb4431e, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: 3a38d951334018f4ca375672c057e25f, type: 2}
     - target: {fileID: 2649109801430816848, guid: 85aef421a81c52c4681a16ea7bb4431e, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -319,6 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6076062943479796513, guid: 85aef421a81c52c4681a16ea7bb4431e, type: 3}
+    - {fileID: 4341360763708454239, guid: 85aef421a81c52c4681a16ea7bb4431e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 85aef421a81c52c4681a16ea7bb4431e, type: 3}
 --- !u!4 &1293523005453382873 stripped
 Transform:

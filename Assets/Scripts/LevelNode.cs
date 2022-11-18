@@ -11,9 +11,9 @@ public class LevelNode : MonoBehaviour
     [HideInInspector] public Transform controlPoint;
     [HideInInspector] public Transform endPoint;
     [HideInInspector] public TextMeshProUGUI text;
-    [HideInInspector] public List<GameObject> objects;
+    [HideInInspector] public List<GameObject> collectables;
     [HideInInspector] public int ID;
-    private int objectInPoolCount;
+    public int objectInPoolCount;
     void Awake()
     {
         InitializeLevelNode();
@@ -42,12 +42,19 @@ public class LevelNode : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Object"))
         {
-            Destroy(other.gameObject,1.5f);
+            StartCoroutine(PopCollectable(other.gameObject));
             objectInPoolCount += 1;
             text.text = objectInPoolCount + " / " + poolThreshold;
         }
     }
 
+    IEnumerator PopCollectable(GameObject other)
+    {
+        yield return new WaitForSeconds(1.5f);
+        other.SetActive(false);
+        //effects
+    }
+    
     private void ControlPoolTimed()
     {
         Invoke(nameof(ControlPool),2);
@@ -56,7 +63,7 @@ public class LevelNode : MonoBehaviour
     {
         if (objectInPoolCount >= poolThreshold)
         {
-            gateAnimation.Play();
+            gateAnimation.Play("GateOpen");
             GameManager.Instance.Invoke(nameof(GameManager.Instance.GoNextNode),0.7f);
         }
         else
@@ -75,6 +82,10 @@ public class LevelNode : MonoBehaviour
         GameManager.ControlEnter -= ControlPoolTimed;
     }
 
+    public void RestartGateAnimation()
+    {
+        gateAnimation.Play("GateClose");
+    }
     public void UpdateScore()
     {
         text.text = objectInPoolCount+" / " + poolThreshold;

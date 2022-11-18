@@ -23,10 +23,11 @@ public class GameManager : MonoBehaviour
     public static event Action LoseEnter;
     public static event Action LoseExit;
     public static event Action Connecting;
+    public static event Action Ending;
+    
     [SerializeField] private GameObject[] collectableTypes;
     public GameState _gameState;
     public GameObject levelTemp;
-    public List<GameObject> levelObjects;
     public List<Level> levels;
     public List<LevelManager.LevelData> levelDatas;
     public Level curLevel;
@@ -42,7 +43,8 @@ public class GameManager : MonoBehaviour
         Rest,
         Lose,
         Win,
-        Connecting
+        Connecting,
+        Ending
     }
 
     public void SetGameState(GameState state)
@@ -73,6 +75,9 @@ public class GameManager : MonoBehaviour
             case GameState.Win:
                 WinExit?.Invoke();
                 break;
+            case GameState.Connecting:
+                Connecting?.Invoke();
+                break;
             default:
                 print("Error in SetGameState switch1");
                 break;
@@ -100,6 +105,9 @@ public class GameManager : MonoBehaviour
             case GameState.Connecting:
                 Connecting?.Invoke();
                 break;
+            case GameState.Ending:
+                Ending?.Invoke();
+                break;
             default:
                 print("Error in SetGameState switch2");
                 break;
@@ -122,7 +130,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _player = FindObjectOfType<Player>();
-        levelObjects = new List<GameObject>();
         levelDatas = new List<LevelManager.LevelData>();
         LoadLevels();
         if (savedLevelID > 0)
@@ -131,15 +138,6 @@ public class GameManager : MonoBehaviour
             curNode = curLevel.nodes[0];
             curNode.EnableNode();
         }
-        else
-        {
-            curLevel = levels[0];
-            curNode = curLevel.nodes[0];
-            curNode.EnableNode();
-        }
-
-        
-        
         SetGameState(GameState.Start);
         
     }
@@ -166,11 +164,18 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            curLevel = levels[curLevel.ID];  //GoingToUpgradeThis
-            curNode.DisableNode();
-            curNode = curLevel.nodes[0];
-            curNode.EnableNode();
-            SetGameState(GameState.Win);
+            if (levels.Count < curLevel.ID - 1)
+            {
+                SetGameState(GameState.Ending);
+            }
+            else
+            {
+                curLevel = levels[curLevel.ID];
+                curNode.DisableNode();
+                curNode = curLevel.nodes[0];
+                curNode.EnableNode();
+                SetGameState(GameState.Win);
+            }
         }
     }
 
@@ -184,7 +189,7 @@ public class GameManager : MonoBehaviour
     {
         DirectoryInfo dir = new DirectoryInfo(Application.dataPath+"/Levels/");
         int levelCount = (dir.GetDirectories().Length);
-        for (int i = 1; i <= levelCount; i++)
+        for (int i = savedLevelID; i <= levelCount; i++)
         {
             string json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node1.json");
             LevelManager.NodeData nodeData1 = JsonUtility.FromJson<LevelManager.NodeData>(json);
@@ -195,11 +200,11 @@ public class GameManager : MonoBehaviour
             json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node3.json");
             LevelManager.NodeData nodeData3 = JsonUtility.FromJson<LevelManager.NodeData>(json);
             
-            var levelobj = Instantiate(levelTemp, transform.position + Vector3.forward * 135 * (i - 1), Quaternion.identity);
-            
-            levelObjects.Add(levelobj);
+            var levelobj = Instantiate(levelTemp, transform.position + Vector3.forward * 150 * (i - 1), Quaternion.identity);
+            //levelobj.SetActive(false);
             var levelScript = levelobj.GetComponent<Level>();
             levelScript.ID = i;
+            levelScript.gameField = levelobj;
             levels.Add(levelScript);
             
             var levelData = new LevelManager.LevelData();
@@ -213,9 +218,11 @@ public class GameManager : MonoBehaviour
                 int objCount = levelDatas[i-1].nodeList[j].positions.Count;
                 for (int k = 0; k < objCount; k++)
                 {
-                    var collectable = Instantiate(collectableTypes[levelDatas[i-1].nodeList[j].objectTypes[k]],
-                        levelDatas[i-1].nodeList[j].positions[k] + Vector3.forward*(135*(i-1)), Quaternion.identity);
-                    collectable.transform.localScale = levelDatas[i - 1].nodeList[j].scales[k];
+                    var collectable = Instantiate(collectableTypes[levelData.nodeList[j].objectTypes[k]],
+                        levelData.nodeList[j].positions[k] + Vector3.forward*(150*(i-1)), Quaternion.identity);
+                    collectable.transform.localScale = levelData.nodeList[j].scales[k];
+                    //collectable.SetActive(false);
+                    levelScript.nodes[j].collectables.Add(collectable);
                 }
                 levelScript.nodes[j].UpdateScore();
             }
@@ -224,16 +231,24 @@ public class GameManager : MonoBehaviour
     
     public void RestartLevel()
     {
-        //RESTART
+        _player.transform.position = curLevel.transform.position;
+        curLevel.RestartLevel();
+        curNode = curLevel.nodes[0];
+        curNode.EnableNode();
+        SetGameState(GameState.Rest);
     }
 
     public void GoNextLevel()
     {
         SetGameState(GameState.Connecting);
-        
     }
     void Update()
     {
         ControlPoint();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

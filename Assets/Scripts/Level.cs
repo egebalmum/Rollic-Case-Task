@@ -11,6 +11,7 @@ public class Level : MonoBehaviour
     private LevelNode node2;
 
     private LevelNode node3;
+    public GameObject gameField;
     public LevelNode[] nodes;
     void Awake()
     {
@@ -26,16 +27,19 @@ public class Level : MonoBehaviour
             {
                 case "Node1":
                     node1 = tr.GetComponent<LevelNode>();
+                    node1.collectables = new List<GameObject>();
                     node1.ID = 1;
                     nodes[0] = node1;
                     break;
                 case "Node2":
                     node2 = tr.GetComponent<LevelNode>();
+                    node1.collectables = new List<GameObject>();
                     node2.ID = 2;
                     nodes[1] = node2;
                     break;
                 case "Node3":
                     node3 = tr.GetComponent<LevelNode>();
+                    node1.collectables = new List<GameObject>();
                     node3.ID = 3;
                     nodes[2] = node3;
                     break;
@@ -47,7 +51,15 @@ public class Level : MonoBehaviour
     {
         foreach (var node in nodes)
         {
-            //node.objects
+            node.objectInPoolCount = 0;
+            node.RestartGateAnimation();
+            node.DisableNode();
+            foreach (var collectable in node.collectables)
+            {
+                collectable.SetActive(true);
+                collectable.GetComponent<CollectableObject>().Restart();
+            }
+            node.UpdateScore();
         }
     }
     

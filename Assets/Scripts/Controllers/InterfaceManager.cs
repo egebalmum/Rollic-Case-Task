@@ -7,17 +7,15 @@ public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager Instance;
     [SerializeField] public GameObject startingUI;
-    
     [SerializeField] public GameObject gameUI;
     [SerializeField] public TextMeshProUGUI curLevel;
     [SerializeField] public TextMeshProUGUI nextLevel;
     [SerializeField] public Image[] nodeModels;
-    private int nodeCount;
     [SerializeField] public GameObject winUI;
-    [SerializeField] public Button winButton;
     [SerializeField] public GameObject loseUI;
-    [SerializeField] public Button loseButton;
     [SerializeField] public GameObject restUI;
+    [SerializeField] public GameObject endingUI;
+    private int nodeCount;
     void Awake()
     {
         if (Instance == null)
@@ -29,11 +27,12 @@ public class InterfaceManager : MonoBehaviour
     void Start()
     {
         GameManager.StartExit += StartExit;
-        
+        GameManager.StartExit += UpdateLevelNumbers;
         GameManager.WinEnter += WinEnter;
         GameManager.WinEnter += GameExit;
         GameManager.WinExit += WinExit;
         GameManager.WinExit += ResetColors;
+        GameManager.WinExit += UpdateLevelNumbers;
         
         GameManager.LoseEnter += LoseEnter;
         GameManager.LoseEnter += GameExit;
@@ -47,8 +46,8 @@ public class InterfaceManager : MonoBehaviour
         GameManager.Connecting += GameEnter;
 
         GameManager.RunningEnter += GameEnter;
-        
 
+        GameManager.Ending += Ending;
     }
 
     void StartExit()
@@ -110,7 +109,14 @@ public class InterfaceManager : MonoBehaviour
         gameUI.SetActive(false);
     }
 
-
-
-
+    void Ending()
+    {
+        endingUI.SetActive(true);
+    }
+    void UpdateLevelNumbers()
+    {
+        int cur = GameManager.Instance.curLevel.ID;
+        curLevel.text = cur.ToString();
+        nextLevel.text = (cur + 1).ToString();
+    }
 }

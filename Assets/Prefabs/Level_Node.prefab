@@ -557,8 +557,9 @@ MonoBehaviour:
   controlPoint: {fileID: 0}
   endPoint: {fileID: 0}
   text: {fileID: 0}
-  objects: []
+  collectables: []
   ID: 0
+  objectInPoolCount: 0
 --- !u!65 &7524705268517644992
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -641,7 +642,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -1.85}
   m_SizeDelta: {x: 1101, y: 462}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7531196107765096462
