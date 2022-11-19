@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Material allowedMat;
     [SerializeField] private Material defMat;
     private EditorCollectable holdingScript;
+    private List<GameObject> placedObjects;
     private void Awake()
     {
         if (Instance == null)
@@ -46,6 +47,7 @@ public class LevelManager : MonoBehaviour
         level.nodeList.Add(node1);
         level.nodeList.Add(node2);
         level.nodeList.Add(node3);
+        placedObjects = new List<GameObject>();
     }
 
     void Update()
@@ -53,8 +55,8 @@ public class LevelManager : MonoBehaviour
         HoldObject();
         PlaceObject();
         CancelObject();
+        DeleteObject();
     }
-
     void HoldObject()
     {
         if (holdingObject != null)
@@ -102,7 +104,7 @@ public class LevelManager : MonoBehaviour
         holdingObject.transform.localScale = scale;
     }
 
-    public void PlaceObject()
+    private void PlaceObject()
     {
         if (holdingObject != null)
         {
@@ -110,17 +112,36 @@ public class LevelManager : MonoBehaviour
             {
                 var placedObject = Instantiate(holdingObject, holdingObject.transform.position, Quaternion.identity);
                 placedObject.GetComponent<MeshRenderer>().material = defMat;
+                placedObjects.Add(placedObject);
                 level.nodeList[activeNode-1].positions.Add(placedObject.transform.position);
                 level.nodeList[activeNode-1].scales.Add(placedObject.transform.localScale);
                 level.nodeList[activeNode-1].objectTypes.Add(activeID);
             }
-            
+        }
+    }
+
+    private void DeleteObject()
+    {
+        if (holdingObject != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                if (level.nodeList[activeNode - 1].positions.Contains(holdingObject.transform.position))
+                {
+                    var index = level.nodeList[activeNode - 1].positions.IndexOf(holdingObject.transform.position);
+                    Destroy(placedObjects[index].gameObject);
+                    placedObjects.RemoveAt(index);
+                    level.nodeList[activeNode-1].positions.RemoveAt(index);
+                    level.nodeList[activeNode-1].scales.RemoveAt(index);
+                    level.nodeList[activeNode-1].objectTypes.RemoveAt(index);
+                }
+            }
         }
     }
 
     public void CancelObject()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && holdingObject != null)
         {
             Destroy(holdingObject.gameObject);
             holdingObject = null;
@@ -136,6 +157,7 @@ public class LevelManager : MonoBehaviour
     {
         _camera.transform.position += Vector3.forward * 40;
         activeNode += 1;
+        placedObjects.Clear();
     }
     
     //save related

@@ -51,8 +51,11 @@ public class LevelNode : MonoBehaviour
     IEnumerator PopCollectable(GameObject other)
     {
         yield return new WaitForSeconds(1.5f);
-        other.GetComponent<CollectableObject>().PopParticleEffect();
-        other.SetActive(false);
+        if (other.gameObject != null)
+        {
+            other.GetComponent<CollectableObject>().PopParticleEffect();
+            other.SetActive(false);
+        }
     }
     
     private void ControlPoolTimed()

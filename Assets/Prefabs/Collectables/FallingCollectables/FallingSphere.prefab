@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3844807664433862199}
   - component: {fileID: 4693667857186541632}
   - component: {fileID: 3030636090844229592}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FallingSphere
   m_TagString: Object
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0.5
   m_AngularDrag: 0.5
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -130,5 +130,6 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   popParticle: {fileID: 8936433280479774322, guid: 996c369a05529e7439aaf40a8fc85767, type: 3}
   childCollectable: {fileID: 334020558753453762, guid: 19b5ddf9c00fea540b0a142d94cb6fb0, type: 3}
-  childAmount: 6
-  activationDistance: 9
+  childAmount: 7
+  activationDistance: 8.5
+  isActivated: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3761987114204969413}
   - component: {fileID: 151106870543745745}
   - component: {fileID: -4486712464899940258}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FallingCube
   m_TagString: Object
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0.5
   m_AngularDrag: 0.5
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -130,5 +130,6 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   popParticle: {fileID: 8936433280479774322, guid: 996c369a05529e7439aaf40a8fc85767, type: 3}
   childCollectable: {fileID: 5589245352327123366, guid: e3440e53d4b43e54197a56c851cb6e1a, type: 3}
-  childAmount: 6
-  activationDistance: 9
+  childAmount: 7
+  activationDistance: 8.5
+  isActivated: 0

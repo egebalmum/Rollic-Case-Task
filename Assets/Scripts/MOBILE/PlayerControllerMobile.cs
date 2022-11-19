@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : PlayerAbility
+public class PlayerControllerMobile : PlayerAbility
 {
     [SerializeField] public float speed = 5;
+    private Touch touch;
     public override Vector3 PhysicUpdate()
     {
         return Move();
@@ -13,8 +14,24 @@ public class PlayerController : PlayerAbility
 
     Vector3 Move()
     {
-        var horizontalVector = Input.GetAxisRaw("Horizontal");
-        var moveVector = new Vector3(horizontalVector, 0, 0);
+        int rawInput= 0;
+        if (Input.touchCount > 0)
+        {
+            touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Moved)
+            {
+                if (touch.deltaPosition.x > 0)
+                {
+                    rawInput = 1;
+                }
+                else
+                {
+                    rawInput = -1;
+                }
+                
+            }
+        }
+        var moveVector = new Vector3(rawInput, 0, 0);
         var displacement = moveVector * (speed * Time.fixedDeltaTime);
         var totalMoveX = displacement.x + _rigidbody.position.x;
         if (totalMoveX > _player.rightBound)

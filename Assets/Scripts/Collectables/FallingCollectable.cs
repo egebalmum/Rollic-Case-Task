@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using Random = UnityEngine.Random;
 
 public class FallingCollectable : CollectableObject
@@ -11,7 +12,7 @@ public class FallingCollectable : CollectableObject
     [SerializeField] private int childAmount;
     private Transform playerTransform;
     [SerializeField] private float activationDistance;
-    private bool isActivated;
+    [SerializeField] private bool isActivated;
     private MeshRenderer _renderer;
     private Collider _collider;
     public override void Start()
@@ -42,7 +43,10 @@ public class FallingCollectable : CollectableObject
 
     private void OnCollisionEnter(Collision other)
     {
-        ChangeForm();
+        if (other.transform.CompareTag("Floor"))
+        {
+            ChangeForm();
+        }
     }
 
     private void ChangeForm()
@@ -54,7 +58,7 @@ public class FallingCollectable : CollectableObject
         {
             var offset = new Vector3(Random.Range(0f, 0.1f), Random.Range(0f, 0.1f), Random.Range(0f, 0.1f));
             var child = Instantiate(childCollectable, transform.position + offset, Quaternion.identity);
-            child.transform.localScale = transform.localScale/4f;
+            child.transform.localScale = transform.localScale/3f;
             spawnedChilds.Add(child);
         }
         //PopParticleEffect();
@@ -64,6 +68,7 @@ public class FallingCollectable : CollectableObject
         ResetChilds();
         base.Restart();
         rigidbody.isKinematic = true;
+        rigidbody.useGravity = false;
         isActivated = false;
         _collider.enabled = true;
         _renderer.enabled = true;
@@ -71,14 +76,18 @@ public class FallingCollectable : CollectableObject
 
     private void Drop()
     {
-        var playerPos2D = playerTransform.position;
-        playerPos2D.y = 0;
-        var collectablePos2D = transform.position;
-        collectablePos2D.y = 0;
-        if (Vector3.Distance(collectablePos2D, playerPos2D) <= activationDistance && !isActivated)
+        if (GameManager.Instance.GetGameState() == GameManager.GameState.Running)
         {
-            rigidbody.isKinematic = false;
-            isActivated = true;
+            var playerPos2D = playerTransform.position;
+            playerPos2D.y = 0;
+            var collectablePos2D = transform.position;
+            collectablePos2D.y = 0;
+            if (Vector3.Distance(collectablePos2D, playerPos2D) <= activationDistance && !isActivated)
+            {
+                rigidbody.isKinematic = false;
+                isActivated = true;
+                rigidbody.useGravity = true;
+            }
         }
     }
     private void ResetChilds()

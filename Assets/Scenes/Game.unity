@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -906,7 +906,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.25
+  m_fontSize: 50.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1397,7 +1397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tap to start
+  m_text: Drag to start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3343,53 +3343,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5968239472718186561, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_ClearFlags
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472718186566, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -8.1
-      objectReference: {fileID: 0}
     - target: {fileID: 5968239472823471119, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471216, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471216, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[1]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471216, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[2]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471216, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[3]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471216, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[4]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471216, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[5]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471217, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471217, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[2]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471217, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[5]
-      value: 7
+      value: PlayerPC
       objectReference: {fileID: 0}
     - target: {fileID: 5968239472823471218, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
       propertyPath: m_RootOrder
@@ -3435,42 +3391,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471219, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471219, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[6]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471223, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5968239472823471223, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: blockedGameStates.Array.data[6]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150170312863448034, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150170313280820626, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150170313986953727, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150170314675735575, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150170314712135686, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 120
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5968239472823471222, guid: c9d28b342472f6847a710528d83f4df8, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9d28b342472f6847a710528d83f4df8, type: 3}

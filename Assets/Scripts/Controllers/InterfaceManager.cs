@@ -48,6 +48,7 @@ public class InterfaceManager : MonoBehaviour
         GameManager.RunningEnter += GameEnter;
 
         GameManager.Ending += Ending;
+        GameManager.Ending += GameExit;
     }
 
     void StartExit()

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D;
 using UnityEngine;
 
 public class PlayerConnectLevel : PlayerAbility
@@ -16,7 +15,7 @@ public class PlayerConnectLevel : PlayerAbility
         }
         else
         {
-            transform.Translate(directionVector.normalized*speed*Time.deltaTime);
+            transform.Translate(directionVector.normalized*(speed*Time.deltaTime));
         }
         
     }

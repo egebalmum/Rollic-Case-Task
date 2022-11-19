@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     public Level curLevel;
     public LevelNode curNode;
     public int savedLevelID;
-
     public Player _player;
     public enum GameState
     {
@@ -131,17 +130,48 @@ public class GameManager : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         levelDatas = new List<LevelManager.LevelData>();
-
         savedLevelID = PlayerPrefs.GetInt("level", 1);
-        
         LoadLevels();
-        if (savedLevelID > 0)
-        {
-            curLevel = levels[savedLevelID - 1];
-            curNode = curLevel.nodes[0];
-            curNode.EnableNode();
-        }
+        curLevel = levels[0];
+        curNode = curLevel.nodes[0];
+        curNode.EnableNode();
+        DeactivateAllLevels();
+        ActivateFirstTwoLevel();
         SetGameState(GameState.Start);
+    }
+
+
+    void DeactivateAllLevels()
+    {
+        foreach (var level in levels)
+        {
+            level.Deactivate();
+        }
+    }
+    void ActivateFirstTwoLevel()
+    {
+        levels[0].Activate();
+        if (levels.Count >= 2)
+        {
+            levels[1].Activate();
+        }
+    }
+
+    void ActivateUpComingLevel()
+    {
+        if (levels.Count >= curIndex()+ 1 + 1)
+        {
+            levels[curIndex()+1].Activate();
+        }
+    }
+
+    void DeactivateOldLevel()
+    {
+        if (curIndex() - 3 >= 0 && levels[curIndex()-3].isActive)
+        {
+            levels[curIndex() - 3].RestartLevel();
+            levels[curIndex() - 3].Deactivate();
+        }
     }
 
     void ControlPoint()
@@ -177,18 +207,20 @@ public class GameManager : MonoBehaviour
     
     private void GoNextLevel()
     {
-        if (levels.Count == curLevel.ID)
+        if (levels.Count == curIndex()+1)
         {
             SetGameState(GameState.Ending);
         }
         else
         {
-            curLevel = levels[curLevel.ID];
+            curLevel = levels[curIndex()+1];
             PlayerPrefs.SetInt("level",curLevel.ID);
             curNode.DisableNode();
             curNode = curLevel.nodes[0];
             curNode.EnableNode();
             SetGameState(GameState.Win);
+            ActivateUpComingLevel();
+            DeactivateOldLevel();
         }
     }
     
@@ -212,29 +244,27 @@ public class GameManager : MonoBehaviour
             
             json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node3.json");
             LevelManager.NodeData nodeData3 = JsonUtility.FromJson<LevelManager.NodeData>(json);
-            
-            var levelobj = Instantiate(levelTemp, transform.position + Vector3.forward * 150 * (i - 1), Quaternion.identity);
-            //levelobj.SetActive(false);
+           
+            var levelobj = Instantiate(levelTemp, transform.position + Vector3.forward * (150 * (i - 1) - 150 * (savedLevelID-1)), Quaternion.identity);
             var levelScript = levelobj.GetComponent<Level>();
             levelScript.ID = i;
             levelScript.gameField = levelobj;
             levels.Add(levelScript);
-            
             var levelData = new LevelManager.LevelData();
             levelData.nodeList.Add(nodeData1);
             levelData.nodeList.Add(nodeData2);
             levelData.nodeList.Add(nodeData3);
             levelDatas.Add(levelData);
+            
             for (int j = 0; j < 3; j++)
             {
-                levelScript.nodes[j].poolThreshold = levelDatas[i-1].nodeList[j].threshold;
-                int objCount = levelDatas[i-1].nodeList[j].positions.Count;
+                levelScript.nodes[j].poolThreshold = levelDatas[(i-1)-(savedLevelID-1)].nodeList[j].threshold;
+                int objCount = levelDatas[(i-1)-(savedLevelID-1)].nodeList[j].positions.Count;
                 for (int k = 0; k < objCount; k++)
                 {
                     var collectable = Instantiate(collectableTypes[levelData.nodeList[j].objectTypes[k]],
-                        levelData.nodeList[j].positions[k] + Vector3.forward*(150*(i-1)), Quaternion.identity);
+                        levelData.nodeList[j].positions[k] + Vector3.forward*(150 * (i - 1) - 150 * (savedLevelID-1)), Quaternion.identity);
                     collectable.transform.localScale = levelData.nodeList[j].scales[k];
-                    //collectable.SetActive(false);
                     levelScript.nodes[j].collectables.Add(collectable);
                 }
                 levelScript.nodes[j].UpdateScore();
@@ -255,6 +285,10 @@ public class GameManager : MonoBehaviour
         ControlPoint();
     }
 
+    int curIndex()
+    {
+        return curLevel.ID - savedLevelID;
+    }
     public void ExitGame()
     {
         Application.Quit();

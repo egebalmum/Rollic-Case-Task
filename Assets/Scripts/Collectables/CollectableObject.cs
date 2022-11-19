@@ -28,7 +28,7 @@ public abstract class CollectableObject : MonoBehaviour
     {
         Instantiate(popParticle, transform.position, Quaternion.identity);
     }
-
+    
     public virtual float YPosOnStart()
     {
         return transform.localScale.y/2;

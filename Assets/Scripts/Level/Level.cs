@@ -13,6 +13,7 @@ public class Level : MonoBehaviour
     private LevelNode node3;
     public GameObject gameField;
     public LevelNode[] nodes;
+    public bool isActive;
     void Awake()
     {
         InitializeLevel();
@@ -54,6 +55,7 @@ public class Level : MonoBehaviour
             node.objectInPoolCount = 0;
             node.RestartGateAnimation();
             node.DisableNode();
+            node.StopAllCoroutines();
             foreach (var collectable in node.collectables)
             {
                 collectable.SetActive(true);
@@ -61,6 +63,34 @@ public class Level : MonoBehaviour
             }
             node.UpdateScore();
         }
+    }
+
+    public void Activate()
+    {
+        gameField.SetActive(true);
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (var collectable in nodes[i].collectables)
+            {
+                collectable.SetActive(true);
+            }
+        }
+
+        isActive = true;
+    }
+
+    public void Deactivate()
+    {
+        gameField.SetActive(false);
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (var collectable in nodes[i].collectables)
+            {
+                collectable.SetActive(false);
+            }
+        }
+
+        isActive = false;
     }
     
 }

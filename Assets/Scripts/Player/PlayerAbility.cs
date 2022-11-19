@@ -8,7 +8,6 @@ public abstract class PlayerAbility : MonoBehaviour
     [HideInInspector] public Player _player;
     [HideInInspector] public Rigidbody _rigidbody;
     public GameManager.GameState[] blockedGameStates;
-    public GameManager.GameState[] blockedPlayerStates;
 
 
     public virtual Vector3 PhysicUpdate()

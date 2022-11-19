@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8545418016667518257}
   - component: {fileID: 4143829819128563494}
   - component: {fileID: -1469636000231521672}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: NormalSphere
   m_TagString: Object
   m_Icon: {fileID: 0}
