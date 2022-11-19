@@ -8,7 +8,6 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/PlayerPush.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Collectables/CollectableObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Collectables/FallingCollectable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Collectables/NormalCollectable.cs" root0="FORCE_HIGHLIGHTING" />
@@ -87,6 +86,8 @@
       <workItem from="1668844578781" duration="6767000" />
       <workItem from="1668859474449" duration="8313000" />
       <workItem from="1668869075461" duration="3700000" />
+      <workItem from="1668880431982" duration="144000" />
+      <workItem from="1668890404380" duration="383000" />
     </task>
     <servers />
   </component>
