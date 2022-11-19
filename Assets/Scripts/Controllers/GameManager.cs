@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public List<LevelManager.LevelData> levelDatas;
     public Level curLevel;
     public LevelNode curNode;
-    public int savedLevelID = 1;
+    public int savedLevelID;
 
     private Player _player;
     public enum GameState
@@ -131,6 +131,9 @@ public class GameManager : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         levelDatas = new List<LevelManager.LevelData>();
+
+        savedLevelID = PlayerPrefs.GetInt("level", 1);
+        
         LoadLevels();
         if (savedLevelID > 0)
         {
@@ -139,7 +142,6 @@ public class GameManager : MonoBehaviour
             curNode.EnableNode();
         }
         SetGameState(GameState.Start);
-        
     }
 
     void ControlPoint()
@@ -164,7 +166,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (levels.Count < curLevel.ID - 1)
+            if (levels.Count == curLevel.ID)
             {
                 SetGameState(GameState.Ending);
             }
