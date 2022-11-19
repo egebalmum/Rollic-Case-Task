@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: m_Animations.Array.data[1]
       value: 
       objectReference: {fileID: 7400000, guid: dba6d9f42d2a914459f9c0e756381642, type: 2}
+    - target: {fileID: 7081413681990478512, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 8111269189108500431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -158,6 +162,10 @@ PrefabInstance:
       propertyPath: m_Animations.Array.data[1]
       value: 
       objectReference: {fileID: 7400000, guid: dba6d9f42d2a914459f9c0e756381642, type: 2}
+    - target: {fileID: 7081413681990478512, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 8111269189108500431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -240,6 +248,10 @@ PrefabInstance:
       propertyPath: m_Animations.Array.data[1]
       value: 
       objectReference: {fileID: 7400000, guid: dba6d9f42d2a914459f9c0e756381642, type: 2}
+    - target: {fileID: 7081413681990478512, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 7636160311195964431, guid: 06b669dc93b7ec4409cb0815f93b56b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0

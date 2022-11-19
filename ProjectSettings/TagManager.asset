@@ -12,6 +12,7 @@ TagManager:
   - Node3
   - PoolText
   - Object
+  - Floor
   layers:
   - Default
   - TransparentFX

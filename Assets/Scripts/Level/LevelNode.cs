@@ -64,7 +64,7 @@ public class LevelNode : MonoBehaviour
         if (objectInPoolCount >= poolThreshold)
         {
             gateAnimation.Play("GateOpen");
-            GameManager.Instance.Invoke(nameof(GameManager.Instance.GoNextNode),0.7f);
+            GameManager.Instance.Invoke(nameof(GameManager.Instance.ContinueAfterCheck),0.7f);
         }
         else
         {

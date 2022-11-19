@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public LevelNode curNode;
     public int savedLevelID;
 
-    private Player _player;
+    public Player _player;
     public enum GameState
     {
         Start,
@@ -155,32 +155,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GoNextNode()
+
+    public void ContinueAfterCheck()
     {
         if (curNode.ID != 3)
         {
-            curNode.DisableNode();
-            curNode = curLevel.nodes[curNode.ID];
-            curNode.EnableNode();
-            SetGameState(GameState.Running);
+            GoNextNode();
         }
         else
         {
-            if (levels.Count == curLevel.ID)
-            {
-                SetGameState(GameState.Ending);
-            }
-            else
-            {
-                curLevel = levels[curLevel.ID];
-                curNode.DisableNode();
-                curNode = curLevel.nodes[0];
-                curNode.EnableNode();
-                SetGameState(GameState.Win);
-            }
+            GoNextLevel();
         }
     }
-
+    private void GoNextNode()
+    {
+        curNode.DisableNode();
+        curNode = curLevel.nodes[curNode.ID];
+        curNode.EnableNode();
+        SetGameState(GameState.Running);
+    }
+    
+    private void GoNextLevel()
+    {
+        if (levels.Count == curLevel.ID)
+        {
+            SetGameState(GameState.Ending);
+        }
+        else
+        {
+            curLevel = levels[curLevel.ID];
+            PlayerPrefs.SetInt("level",curLevel.ID);
+            curNode.DisableNode();
+            curNode = curLevel.nodes[0];
+            curNode.EnableNode();
+            SetGameState(GameState.Win);
+        }
+    }
+    
     public void LoseLevel()
     {
         SetGameState(GameState.Lose);
@@ -238,11 +249,6 @@ public class GameManager : MonoBehaviour
         curNode = curLevel.nodes[0];
         curNode.EnableNode();
         SetGameState(GameState.Rest);
-    }
-
-    public void GoNextLevel()
-    {
-        SetGameState(GameState.Connecting);
     }
     void Update()
     {

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5589245352327123366
+--- !u!1 &3244667673565977530
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3132440793875776825}
-  - component: {fileID: 8384092072465531741}
-  - component: {fileID: 4737476909913694821}
-  - component: {fileID: 2108751819258479237}
-  - component: {fileID: 2307236183437197312}
-  - component: {fileID: -5067025915621235657}
+  - component: {fileID: 3632641564434368229}
+  - component: {fileID: 756325971839865480}
+  - component: {fileID: 3071164403243779416}
+  - component: {fileID: 3761987114204969413}
+  - component: {fileID: 151106870543745745}
+  - component: {fileID: -4486712464899940258}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: FallingCube
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3132440793875776825
+--- !u!4 &3632641564434368229
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589245352327123366}
+  m_GameObject: {fileID: 3244667673565977530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,21 +35,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8384092072465531741
+--- !u!33 &756325971839865480
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589245352327123366}
+  m_GameObject: {fileID: 3244667673565977530}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4737476909913694821
+--- !u!23 &3071164403243779416
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589245352327123366}
+  m_GameObject: {fileID: 3244667673565977530}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -84,26 +84,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2108751819258479237
+--- !u!65 &3761987114204969413
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589245352327123366}
+  m_GameObject: {fileID: 3244667673565977530}
   m_Material: {fileID: 13400000, guid: 9f0f5a059923b8042921bc540309fdd3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2307236183437197312
+--- !u!54 &151106870543745745
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589245352327123366}
+  m_GameObject: {fileID: 3244667673565977530}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.5
@@ -113,16 +113,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-5067025915621235657
+--- !u!114 &-4486712464899940258
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589245352327123366}
+  m_GameObject: {fileID: 3244667673565977530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0d0a0bcfd10ea42b154337bb1ea061, type: 3}
+  m_Script: {fileID: 11500000, guid: 88bd8703d0c868547b3a893e718852eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0, z: 0}
+  initialRot: {x: 0, y: 0, z: 0, w: 0}
+  rigidbody: {fileID: 0}
   popParticle: {fileID: 8936433280479774322, guid: 996c369a05529e7439aaf40a8fc85767, type: 3}
+  childCollectable: {fileID: 5589245352327123366, guid: e3440e53d4b43e54197a56c851cb6e1a, type: 3}
+  childAmount: 6
+  activationDistance: 9

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -19,6 +17,12 @@ public class LevelManager : MonoBehaviour
     private NodeData node2;
     private NodeData node3;
     private LevelData level;
+    private bool allowedToPlace;
+    private MeshRenderer holdingObjectRenderer;
+    [SerializeField] private Material forbiddenMat;
+    [SerializeField] private Material allowedMat;
+    [SerializeField] private Material defMat;
+    private EditorCollectable holdingScript;
     private void Awake()
     {
         if (Instance == null)
@@ -58,20 +62,43 @@ public class LevelManager : MonoBehaviour
             var vec = Input.mousePosition;
             vec.z = 35;
             vec = Camera.main.ScreenToWorldPoint(vec);
-            vec.y = holdingObject.transform.localScale.y / 2;
+            vec.y = holdingScript.YPos();
             vec.x = Mathf.Round(vec.x * 1f) / 1f;
             vec.z = Mathf.Round(vec.z * 1f) / 1f;
             if (vec.x >= -4.5f && vec.x <= 4.5f && vec.z <= 30+((activeNode-1)*40) && vec.z >= 0+(activeNode-1)*40)
             {
                 holdingObject.transform.position = vec;
             }
+            MousePosValidCheck(vec);
         }
     }
 
+    void MousePosValidCheck(Vector3 vec)
+    {
+        if (vec.x >= -4.6f && vec.x <= 4.6f && vec.z <= 30+((activeNode-1)*40) && vec.z >= 0+(activeNode-1)*40 && !level.nodeList[activeNode-1].positions.Contains(holdingObject.transform.position))
+        {
+            allowedToPlace = true;
+            holdingObjectRenderer.material = allowedMat;
+        }
+        else
+        {
+            allowedToPlace = false;
+            holdingObjectRenderer.material = forbiddenMat;
+        }
+    }
+    
+
     public void CreateObject(int ID, Vector3 scale)
     {
+        if (holdingObject != null)
+        {
+            Destroy(holdingObject.gameObject);
+            holdingObject = null;
+        }
         activeID = ID;
         holdingObject = Instantiate(types[activeID], transform.position, Quaternion.identity);
+        holdingScript = holdingObject.GetComponent<EditorCollectable>();
+        holdingObjectRenderer = holdingObject.GetComponent<MeshRenderer>();
         holdingObject.transform.localScale = scale;
     }
 
@@ -79,9 +106,10 @@ public class LevelManager : MonoBehaviour
     {
         if (holdingObject != null)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && allowedToPlace)
             {
                 var placedObject = Instantiate(holdingObject, holdingObject.transform.position, Quaternion.identity);
+                placedObject.GetComponent<MeshRenderer>().material = defMat;
                 level.nodeList[activeNode-1].positions.Add(placedObject.transform.position);
                 level.nodeList[activeNode-1].scales.Add(placedObject.transform.localScale);
                 level.nodeList[activeNode-1].objectTypes.Add(activeID);
@@ -154,7 +182,5 @@ public class LevelManager : MonoBehaviour
             string json = JsonUtility.ToJson(level.nodeList[i], true);
             File.WriteAllText(Application.dataPath + "/Levels/Level"+ levelNumber + "/node"+(i+1) +".json" , json);
         }
-        Debug.Log("done");
-        
     }
 }

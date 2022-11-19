@@ -11,8 +11,10 @@ public class LevelEditorUIManager : MonoBehaviour
     public TMP_InputField scaleY;
     public TMP_InputField scaleZ;
     public TMP_InputField threshold;
-    
-    public TextMeshProUGUI[] texts;
+    public Button finishButton;
+    public Button nextButton;
+    public TextMeshProUGUI[] thresholdTexts;
+    public TextMeshProUGUI loadingText;
     public int activeNode=1;
     void Awake()
     {
@@ -40,7 +42,7 @@ public class LevelEditorUIManager : MonoBehaviour
         }
         catch
         {
-            scale = new Vector3(0.25f, 0.25f, 0.25f);
+            scale = new Vector3(0.35f, 0.35f, 0.35f);
         }
         LevelManager.Instance.CreateObject(objSelection.value,scale);
     }
@@ -48,18 +50,30 @@ public class LevelEditorUIManager : MonoBehaviour
     public void OnThreshold()
     {
         LevelManager.Instance.EditThreshold(int.Parse(threshold.text));
-        texts[activeNode-1].text = "X / " + threshold.text;
+        thresholdTexts[activeNode-1].text = "X / " + threshold.text;
     }
 
     public void GoNextNode()
     {
         activeNode += 1;
+        if (activeNode == 3)
+        {
+            finishButton.interactable = true;
+            nextButton.interactable = false;
+        }
         LevelManager.Instance.GoNextNode();
     }
 
     public void SaveLevel()
     {
+        loadingText.text = "Loading...";
         LevelManager.Instance.SaveLevel();
+        StartCoroutine(WaitForSave(2));
     }
-    
+
+    IEnumerator WaitForSave(float time)
+    {
+        yield return new WaitForSeconds(time);
+        loadingText.text = "Saved!";
+    }
 }

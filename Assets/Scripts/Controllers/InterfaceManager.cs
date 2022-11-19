@@ -119,4 +119,9 @@ public class InterfaceManager : MonoBehaviour
         curLevel.text = cur.ToString();
         nextLevel.text = (cur + 1).ToString();
     }
+
+    public void Connector()
+    {
+        GameManager.Instance.SetGameState(GameManager.GameState.Connecting);
+    }
 }
