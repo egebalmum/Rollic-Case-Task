@@ -91,7 +91,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806273193677723484}
-  m_Material: {fileID: 13400000, guid: 9f0f5a059923b8042921bc540309fdd3, type: 2}
+  m_Material: {fileID: 13400000, guid: e29506dbfebacd3498525bd28da6ef17, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5000001
@@ -106,12 +106,12 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806273193677723484}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1
   m_Drag: 0.5
   m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6672020003551936626
@@ -129,4 +129,6 @@ MonoBehaviour:
   initialPos: {x: 0, y: 0, z: 0}
   initialRot: {x: 0, y: 0, z: 0, w: 0}
   rigidbody: {fileID: 0}
+  materialNormal: {fileID: 13400000, guid: e29506dbfebacd3498525bd28da6ef17, type: 2}
+  materialStack: {fileID: 13400000, guid: d3b0b2531b0348444a32f7b210345a6e, type: 2}
   popParticle: {fileID: 8936433280479774322, guid: 996c369a05529e7439aaf40a8fc85767, type: 3}

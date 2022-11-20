@@ -14,6 +14,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/InterfaceManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelEditor/EditorCollectable/EditorCollectable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelEditor/EditorCollectable/EditorFalling.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelEditor/EditorMainMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MOBILE/PlayerControllerMobile.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -87,7 +88,9 @@
       <workItem from="1668859474449" duration="8313000" />
       <workItem from="1668869075461" duration="3700000" />
       <workItem from="1668880431982" duration="144000" />
-      <workItem from="1668890404380" duration="383000" />
+      <workItem from="1668890404380" duration="431000" />
+      <workItem from="1668949861392" duration="21834000" />
+      <workItem from="1668982536329" duration="693000" />
     </task>
     <servers />
   </component>

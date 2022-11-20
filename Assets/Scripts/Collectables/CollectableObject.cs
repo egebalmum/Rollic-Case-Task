@@ -8,12 +8,21 @@ public abstract class CollectableObject : MonoBehaviour
     public Vector3 initialPos;
     public Quaternion initialRot;
     public Rigidbody rigidbody;
+    private Collider collider;
+    [SerializeField] private PhysicMaterial materialNormal;
+    [SerializeField] private PhysicMaterial materialStack;
     [SerializeField] public ParticleSystem popParticle;
+    public enum ColliderState
+    {
+        normal,
+        stack
+    }
     public virtual void Start()
     {
         initialPos = transform.position;
         initialRot = transform.rotation;
         rigidbody = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
     }
 
     public virtual void Restart()
@@ -33,4 +42,17 @@ public abstract class CollectableObject : MonoBehaviour
     {
         return transform.localScale.y/2;
     }
+
+    public virtual void SetColliderState(ColliderState state)
+    {
+        if (state == ColliderState.normal)
+        {
+            collider.material = materialNormal;
+        }
+        else
+        {
+            collider.material = materialStack;
+        }
+    }
+        
 }

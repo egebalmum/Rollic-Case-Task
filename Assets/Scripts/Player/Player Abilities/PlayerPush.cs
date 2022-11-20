@@ -10,7 +10,6 @@ public class PlayerPush : PlayerAbility
     private List<CollectableObject> collectables;
     void Start()
     {
-
         collectables = new List<CollectableObject>();
         GameManager.ControlEnter += PushCollectables;
     }
@@ -19,7 +18,9 @@ public class PlayerPush : PlayerAbility
     {
         if (other.gameObject.GetComponent<CollectableObject>() != null)
         {
-            collectables.Add(other.gameObject.GetComponent<CollectableObject>());
+            var collectable = other.gameObject.GetComponent<CollectableObject>();
+            collectable.SetColliderState(CollectableObject.ColliderState.stack);
+            collectables.Add(collectable);
         }
     }
 
@@ -27,7 +28,9 @@ public class PlayerPush : PlayerAbility
     {
         if (other.gameObject.GetComponent<CollectableObject>() != null)
         {
-            collectables.Remove(other.gameObject.GetComponent<CollectableObject>());
+            var collectable = other.gameObject.GetComponent<CollectableObject>();
+            collectable.SetColliderState(CollectableObject.ColliderState.normal);
+            collectables.Remove(collectable);
         }
     }
 
@@ -35,6 +38,7 @@ public class PlayerPush : PlayerAbility
     {
         foreach (var collectable in collectables)
         {
+            collectable.SetColliderState(CollectableObject.ColliderState.normal);
             var direction = collectable.rigidbody.velocity;
             direction.y = 0;
             collectable.rigidbody.AddForce(direction*pushForce);

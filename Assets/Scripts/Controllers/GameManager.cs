@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public GameState _gameState;
     public GameObject levelTemp;
     public List<Level> levels;
-    public List<LevelManager.LevelData> levelDatas;
+    public List<Data.LevelData> levelDatas;
     public Level curLevel;
     public LevelNode curNode;
     public int savedLevelID;
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _player = FindObjectOfType<Player>();
-        levelDatas = new List<LevelManager.LevelData>();
+        levelDatas = new List<Data.LevelData>();
         savedLevelID = PlayerPrefs.GetInt("level", 1);
         LoadLevels();
         curLevel = levels[0];
@@ -237,20 +237,20 @@ public class GameManager : MonoBehaviour
         for (int i = savedLevelID; i <= levelCount; i++)
         {
             string json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node1.json");
-            LevelManager.NodeData nodeData1 = JsonUtility.FromJson<LevelManager.NodeData>(json);
+            Data.NodeData nodeData1 = JsonUtility.FromJson<Data.NodeData>(json);
             
             json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node2.json");
-            LevelManager.NodeData nodeData2 = JsonUtility.FromJson<LevelManager.NodeData>(json);
+            Data.NodeData nodeData2 = JsonUtility.FromJson<Data.NodeData>(json);
             
             json =  File.ReadAllText(Application.dataPath + "/Levels/Level" + (i) + "/" + "node3.json");
-            LevelManager.NodeData nodeData3 = JsonUtility.FromJson<LevelManager.NodeData>(json);
+            Data.NodeData nodeData3 = JsonUtility.FromJson<Data.NodeData>(json);
            
             var levelobj = Instantiate(levelTemp, transform.position + Vector3.forward * (150 * (i - 1) - 150 * (savedLevelID-1)), Quaternion.identity);
             var levelScript = levelobj.GetComponent<Level>();
             levelScript.ID = i;
             levelScript.gameField = levelobj;
             levels.Add(levelScript);
-            var levelData = new LevelManager.LevelData();
+            var levelData = new Data.LevelData();
             levelData.nodeList.Add(nodeData1);
             levelData.nodeList.Add(nodeData2);
             levelData.nodeList.Add(nodeData3);

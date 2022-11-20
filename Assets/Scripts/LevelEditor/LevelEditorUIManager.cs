@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,8 +12,8 @@ public class LevelEditorUIManager : MonoBehaviour
     public TMP_InputField scaleY;
     public TMP_InputField scaleZ;
     public TMP_InputField threshold;
-    public Button finishButton;
     public Button nextButton;
+    public Button backButton;
     public TextMeshProUGUI[] thresholdTexts;
     public TextMeshProUGUI loadingText;
     public int activeNode=1;
@@ -53,17 +54,38 @@ public class LevelEditorUIManager : MonoBehaviour
         thresholdTexts[activeNode-1].text = "X / " + threshold.text;
     }
 
+    public void OnThreshold(int node, int value)
+    {
+        thresholdTexts[node-1].text = "X / " + value;
+    }
+
     public void GoNextNode()
     {
         activeNode += 1;
         if (activeNode == 3)
         {
-            finishButton.interactable = true;
             nextButton.interactable = false;
+        }
+        else if (activeNode == 2)
+        {
+            backButton.interactable = true;
         }
         LevelManager.Instance.GoNextNode();
     }
 
+    public void GoBackNode()
+    {
+        activeNode -= 1;
+        if (activeNode == 2)
+        {
+            nextButton.interactable = true;
+        }
+        else if (activeNode == 1)
+        {
+            backButton.interactable = false;
+        }
+        LevelManager.Instance.GoBackNode();
+    }
     public void SaveLevel()
     {
         loadingText.text = "Loading...";
@@ -75,5 +97,18 @@ public class LevelEditorUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         loadingText.text = "Saved!";
+    }
+
+    public void ResetUIManager()
+    {
+        loadingText.text = String.Empty;
+        scaleX.text = String.Empty;
+        scaleY.text = String.Empty;
+        scaleZ.text = String.Empty;
+        threshold.text = String.Empty;
+        foreach (var thresholdObj in thresholdTexts)
+        {
+            thresholdObj.text = "X / X";
+        }
     }
 }

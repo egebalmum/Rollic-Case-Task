@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-
 public class LevelManager : MonoBehaviour
 {
+    
     private Camera _camera;
     public static LevelManager Instance;
     [SerializeField] public List<GameObject> types;
@@ -13,17 +13,22 @@ public class LevelManager : MonoBehaviour
     public int[] thresholds;
     public int activeNode=1;
     public int activeID;
-    private NodeData node1;
-    private NodeData node2;
-    private NodeData node3;
-    private LevelData level;
+    private Data.NodeData node1;
+    private Data.NodeData node2;
+    private Data.NodeData node3;
+    private Data.LevelData level;
     private bool allowedToPlace;
     private MeshRenderer holdingObjectRenderer;
     [SerializeField] private Material forbiddenMat;
     [SerializeField] private Material allowedMat;
     [SerializeField] private Material defMat;
     private EditorCollectable holdingScript;
-    private List<GameObject> placedObjects;
+    private List<List<GameObject>> placedObjects;
+    public Dictionary<int, Data.LevelData> dataDict;
+    public bool isBuildingModeOn;
+    public Mode mode;
+    private int levelNumber;
+    private bool isSaved;
     private void Awake()
     {
         if (Instance == null)
@@ -40,22 +45,35 @@ public class LevelManager : MonoBehaviour
     {
         thresholds = new int[3];
         _camera = FindObjectOfType<Camera>();
-        node1 = new NodeData();
-        node2 = new NodeData();
-        node3 = new NodeData();
-        level = new LevelData();
-        level.nodeList.Add(node1);
-        level.nodeList.Add(node2);
-        level.nodeList.Add(node3);
-        placedObjects = new List<GameObject>();
+        placedObjects = new List<List<GameObject>>();
+        placedObjects.Add(new List<GameObject>());
+        placedObjects.Add(new List<GameObject>());
+        placedObjects.Add(new List<GameObject>());
+        InitiateLevelObjects();
+        dataDict = new Dictionary<int, Data.LevelData>();
     }
 
+
+    public enum Mode
+    {
+        editOld,
+        createNew
+    }
     void Update()
     {
-        HoldObject();
-        PlaceObject();
-        CancelObject();
-        DeleteObject();
+        BuildingFunctions();
+    }
+
+
+    void BuildingFunctions()
+    {
+        if (isBuildingModeOn)
+        {
+            HoldObject();
+            PlaceObject();
+            CancelObject();
+            DeleteObject();
+        }
     }
     void HoldObject()
     {
@@ -112,7 +130,7 @@ public class LevelManager : MonoBehaviour
             {
                 var placedObject = Instantiate(holdingObject, holdingObject.transform.position, Quaternion.identity);
                 placedObject.GetComponent<MeshRenderer>().material = defMat;
-                placedObjects.Add(placedObject);
+                placedObjects[activeNode-1].Add(placedObject);
                 level.nodeList[activeNode-1].positions.Add(placedObject.transform.position);
                 level.nodeList[activeNode-1].scales.Add(placedObject.transform.localScale);
                 level.nodeList[activeNode-1].objectTypes.Add(activeID);
@@ -129,8 +147,8 @@ public class LevelManager : MonoBehaviour
                 if (level.nodeList[activeNode - 1].positions.Contains(holdingObject.transform.position))
                 {
                     var index = level.nodeList[activeNode - 1].positions.IndexOf(holdingObject.transform.position);
-                    Destroy(placedObjects[index].gameObject);
-                    placedObjects.RemoveAt(index);
+                    Destroy(placedObjects[activeNode-1][index].gameObject);
+                    placedObjects[activeNode-1].RemoveAt(index);
                     level.nodeList[activeNode-1].positions.RemoveAt(index);
                     level.nodeList[activeNode-1].scales.RemoveAt(index);
                     level.nodeList[activeNode-1].objectTypes.RemoveAt(index);
@@ -157,52 +175,122 @@ public class LevelManager : MonoBehaviour
     {
         _camera.transform.position += Vector3.forward * 40;
         activeNode += 1;
-        placedObjects.Clear();
+    }
+
+    public void GoBackNode()
+    {
+        _camera.transform.position -= Vector3.forward * 40;
+        activeNode -= 1;
     }
     
-    //save related
-
-    public class LevelData
-    {
-        public List<NodeData> nodeList;
-
-        public LevelData()
-        {
-            nodeList = new List<NodeData>();
-        }
-    }
-
-    public class NodeData
-    {
-        public List<Vector3> positions;
-        public List<Vector3> scales;
-        public List<int> objectTypes;
-        public int threshold;
-        public NodeData()
-        {
-            positions = new List<Vector3>();
-            scales = new List<Vector3>();
-            objectTypes = new List<int>();
-        }
-    }
-
     public void SaveLevel()
     {
-        int levelNumber;
-        DirectoryInfo dir = new DirectoryInfo(Application.dataPath+"/Levels/");
-        if (dir.GetDirectories().Length == 0)
+        isSaved = true;
+        
+        if (mode ==  Mode.createNew)
         {
-            levelNumber = 1;
+            Directory.CreateDirectory(Application.dataPath + "/Levels/Level"+levelNumber);
+            EditorMainMenu.Instance.AddNewSelection();
+            EditorMainMenu.Instance.levelDatas.Add(dataDict[levelNumber]);
         }
         else
         {
-            levelNumber = dir.GetDirectories().Length + 1;
+            EditorMainMenu.Instance.levelDatas[levelNumber - 1] = dataDict[levelNumber];
         }
-        Directory.CreateDirectory(Application.dataPath + "/Levels/Level"+levelNumber);
         for (int i = 0; i < 3; i++)
         {
             string json = JsonUtility.ToJson(level.nodeList[i], true);
             File.WriteAllText(Application.dataPath + "/Levels/Level"+ levelNumber + "/node"+(i+1) +".json" , json);
+        }
+        
+    }
+
+    public void LoadLevel(Data.LevelData data, int selectionIndex)
+    {
+        levelNumber = selectionIndex+1;
+        if (dataDict.ContainsKey(levelNumber))
+        {
+            level = dataDict[levelNumber];
+        }
+        else
+        {
+            dataDict.Add(levelNumber, new Data.LevelData());
+            level = dataDict[levelNumber];
+            level.Copy(data);
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            var node = level.nodeList[i];
+            for (int j = 0; j < level.nodeList[i].positions.Count; j++)
+            {
+                var placedObject = Instantiate(types[node.objectTypes[j]], node.positions[j], Quaternion.identity);
+                placedObjects[i].Add(placedObject);
+                placedObject.transform.localScale = node.scales[j];
+            }
+        }
+        LoadThresholds();
+    }
+
+
+    public void LoadThresholds()
+    {
+        LevelEditorUIManager.Instance.OnThreshold(1,level.nodeList[0].threshold);
+        LevelEditorUIManager.Instance.OnThreshold(2,level.nodeList[1].threshold);
+        LevelEditorUIManager.Instance.OnThreshold(3,level.nodeList[2].threshold);
+    }
+    public void ResetLevel()
+    {
+        if (holdingObject != null)
+        {
+            Destroy(holdingObject.gameObject);
+            holdingObject = null;
+        }
+        
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (var obj in placedObjects[i])
+            {
+                Destroy(obj.gameObject);
+            }
+            placedObjects[i].Clear();
+        }
+        
+        node1 = null;
+        node2 = null;
+        node3 = null;
+        level = null;
+        dataDict.Remove(levelNumber);
+        levelNumber = 0;
+        isSaved = false;
+        InitiateLevelObjects();
+    }
+
+    public void InitiateLevelObjects()
+    {
+        node1 = new Data.NodeData();
+        node2 = new Data.NodeData();
+        node3 = new Data.NodeData();
+        level = new Data.LevelData();
+        level.nodeList.Add(node1);
+        level.nodeList.Add(node2);
+        level.nodeList.Add(node3);
+    }
+    public void CreateLevel(int selectionCount)
+    {
+        InitiateLevelObjects();
+        levelNumber = selectionCount + 1;
+        dataDict.Add(levelNumber,new Data.LevelData());
+        dataDict[levelNumber].nodeList.Add(node1);
+        dataDict[levelNumber].nodeList.Add(node2);
+        dataDict[levelNumber].nodeList.Add(node3);
+        level = dataDict[levelNumber];
+    }
+
+    public void CheckSave()
+    {
+        if (!isSaved)
+        {
+            dataDict.Remove(levelNumber);
         }
     }
 }
