@@ -1,2 +1,2 @@
-# Rollic Case Task
+# Case Task
  
